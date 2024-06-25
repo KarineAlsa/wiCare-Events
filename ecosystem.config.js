@@ -2,7 +2,7 @@ module.exports = {
     apps: [
       {
         name: 'events-api',
-        script: './dist/index.js',
+        script: './dist/app.js',
         watch: true,
         ignore_watch: ["node_modules", "dist"],
         watch_options: {
