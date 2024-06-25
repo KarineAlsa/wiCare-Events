@@ -8,7 +8,7 @@ dotenv.config()
 const server = express();
 const server_port =process.env.PORT;
 server.use(express.json());
-server.use('/event', eventRoutes);
+server.use('/', eventRoutes);
 
 
 

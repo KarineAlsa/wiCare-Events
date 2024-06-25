@@ -7,6 +7,7 @@ export default class GetEventByIdController {
 
     async run(request:Request,response:Response) {
         const id = request.params.event_id
+        console.log(id)
         try {
             
             let event = await this.useCase.run(Number(id));
