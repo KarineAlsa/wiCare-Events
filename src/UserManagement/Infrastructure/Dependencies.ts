@@ -7,8 +7,10 @@ import GetEventByIdUseCase from "../Application/UseCase/GetEventById"
 import EventMySQLRepository from "./Repository/EventRepositoryMySQL"
 
 import {JWTS} from "./Service/JWT"
+import {S3StorageService} from "./Service/S3Storage"
 
 export const JWT = new JWTS();
+export const S3Storage = new S3StorageService();
 
 import RegisterEventController from './Controller/RegisterEventController'
 import GetAllEventsController from './Controller/GetAllEventsController'
@@ -19,7 +21,7 @@ import GetEventByIdController from "./Controller/GetEventByIdController"
 export const MySqEventRepository = new EventMySQLRepository();
 export const currentRepository = MySqEventRepository;
 
-export const registerEventCase = new RegisterEventUseCase(currentRepository);
+export const registerEventCase = new RegisterEventUseCase(currentRepository, S3Storage);
 export const getAllEventsCase = new GetAllEventsUseCase(currentRepository);
 export const getEventsAssociationCase = new GetEventsAssociation(currentRepository);
 export const getEventsByCathegoryCase = new GetEventsByCathegoryUseCase(currentRepository);

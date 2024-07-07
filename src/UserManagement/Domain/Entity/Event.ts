@@ -8,6 +8,7 @@ export class Event {
     public cathegory:string;
     public location:string;
     public association_id:number
+    public picture:string
     public id?:number
 
     constructor(
@@ -18,6 +19,7 @@ export class Event {
         cathegory:string,
         location:string,
         association_id:number,
+        picture:string,
         id?:number
     ) {
         this.name = name;
@@ -27,6 +29,7 @@ export class Event {
         this.cathegory = cathegory;
         this.location = location;
         this.association_id = association_id;
+        this.picture = picture;
         this.id = id;
     }
 

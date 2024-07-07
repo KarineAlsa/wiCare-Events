@@ -27,9 +27,9 @@ export default class EventMySQLRepository implements EventInterface {
   }
 }
   async registerEvent(event: Event): Promise<any> {
-    const sqlEvent = "INSERT INTO Events (name, description, location, hour , cathegory, date, association_id) VALUES (?,?,?, ?,?,?,?)";
+    const sqlEvent = "INSERT INTO Events (name, description, location, hour , cathegory, date, association_id, photo) VALUES (?,?,?, ?,?,?,?,?)";
 
-    const paramsEvent: any[] = [event.name, event.description, event.location, event.hour, event.cathegory, event.date, event.association_id];
+    const paramsEvent: any[] = [event.name, event.description, event.location, event.hour, event.cathegory, event.date, event.association_id, event.picture];
     
     let connection;
 
@@ -37,14 +37,20 @@ export default class EventMySQLRepository implements EventInterface {
       connection = await connection_pool.getConnection();
       await connection.beginTransaction();
 
-        const [resultUser]: any = await query(sqlEvent, paramsEvent, connection);
+        const [resultEvent]: any = await query(sqlEvent, paramsEvent, connection);
 
-        if (resultUser && resultUser.insertId) {
+        if (resultEvent && resultEvent.insertId) {
           await connection.commit();
           return {
-            id: resultUser.insertId,
+            id: resultEvent.insertId,
             name: event.name,
             description: event.description,
+            location: event.location,
+            hour: event.hour,
+            cathegory: event.cathegory,
+            date: event.date,
+            association_id: event.association_id,
+            picture: event.picture
           };
         }
        
