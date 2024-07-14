@@ -32,7 +32,11 @@
     "mysql2": "^3.9.2",
     "pm2": "^5.4.1",
     "ts-node": "^10.9.2",
+<<<<<<< Updated upstream
     "validator": "^13.12.0"
+=======
+    "typescript": "^5.5.2"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
