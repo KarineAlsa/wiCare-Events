@@ -1,4 +1,5 @@
 import { Event } from "../Entity/Event";
+import { Event_User } from "../Entity/Event_User";
 
 export default interface EventInterface{
     registerEvent(event:Event):Promise<Event|any>;//ya
@@ -6,4 +7,5 @@ export default interface EventInterface{
     getEventById(id:number):Promise<Event|any>;
     getAllEventsByAssociationId(association_id:number):Promise<Event[]|any>;//ya
     getEventsByCathegory(cathegory:string):Promise<Event[]|any>;
+    registerEventUser(Event_user:Event_User):Promise<any>;
 }

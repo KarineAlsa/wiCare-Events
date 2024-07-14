@@ -3,6 +3,7 @@ import GetAllEventsUseCase from "../Application/UseCase/GetAllEventsUseCase";
 import GetEventsAssociation from "../Application/UseCase/GetEventsByAssociationUseCase";
 import GetEventsByCathegoryUseCase from "../Application/UseCase/GetEventsByCathegory";
 import GetEventByIdUseCase from "../Application/UseCase/GetEventById"
+import AddVolunteerToEventUseCase from "../Application/UseCase/AddVolunteerEvent"
 
 import EventMySQLRepository from "./Repository/EventRepositoryMySQL"
 
@@ -17,6 +18,7 @@ import GetAllEventsController from './Controller/GetAllEventsController'
 import GetEventsByAssociationController from "./Controller/GetEventsByAssociationController";
 import GetEventsByCathegoryController from "./Controller/GetEventsByCathegoryController";
 import GetEventByIdController from "./Controller/GetEventByIdController"
+import AddVolunteerToEventController from "./Controller/AddEventVolunteerController"
 
 export const MySqEventRepository = new EventMySQLRepository();
 export const currentRepository = MySqEventRepository;
@@ -26,9 +28,11 @@ export const getAllEventsCase = new GetAllEventsUseCase(currentRepository);
 export const getEventsAssociationCase = new GetEventsAssociation(currentRepository);
 export const getEventsByCathegoryCase = new GetEventsByCathegoryUseCase(currentRepository);
 export const getEventByIdCase =  new GetEventByIdUseCase(currentRepository)
+export const addVolunteerToEventCase = new AddVolunteerToEventUseCase(currentRepository);
 
 export const registerEventController = new RegisterEventController(registerEventCase);
 export const getAllEventsController = new GetAllEventsController(getAllEventsCase);
 export const getEventsAssociationController = new GetEventsByAssociationController(getEventsAssociationCase);
 export const getEventsByCathegoryController = new GetEventsByCathegoryController(getEventsByCathegoryCase);
 export const getEventByIdController =  new GetEventByIdController(getEventByIdCase)
+export const addVolunteerToEventController = new AddVolunteerToEventController(addVolunteerToEventCase);

@@ -3,8 +3,43 @@ import bcrypt from 'bcrypt';
 import query from "../../Database/mysql";
 import { connection_pool } from "../../Database/mysql";
 import { Event } from "../../Domain/Entity/Event";
+import { Event_User } from "../../Domain/Entity/Event_User";
 
 export default class EventMySQLRepository implements EventInterface {
+  async registerEventUser(Event_user: Event_User): Promise<any> {
+    const sql = "INSERT INTO Events_Users (event_id, user_id) VALUES (?,?)";
+    console.log(Event_user);
+    const params: any[] = [Event_user.event_id, Event_user.user_id];
+    let connection;
+    try {
+      connection = await connection_pool.getConnection();
+      await connection.beginTransaction();
+      const [result]: any = await query(sql, params, connection);
+      if (result && result.insertId) {
+        await connection.commit();
+        return {
+          id: result.insertId,
+          event_id: Event_user.event_id,
+          user_id: Event_user.user_id,
+        };
+      }
+      await connection.rollback();
+      return false;
+    } catch (error) {
+      console.error("Error al registrar usuario al evento", error);
+      if (connection) {
+        await connection.rollback();
+
+      }
+      return false;
+    } finally {
+      if (connection) {
+        connection.release();
+        console.log("Conexión cerrada");
+      }
+    }
+  }
+
   async getEventsByCathegory(cathegory: string): Promise<any> {
     const sql = "SELECT * FROM Events WHERE cathegory = ?";
     const params: any[] = [cathegory];
