@@ -8,7 +8,6 @@ import { Event_User } from "../../Domain/Entity/Event_User";
 export default class EventMySQLRepository implements EventInterface {
   async registerEventUser(Event_user: Event_User): Promise<any> {
     const sql = "INSERT INTO Events_Users (event_id, user_id) VALUES (?,?)";
-    console.log(Event_user);
     const params: any[] = [Event_user.event_id, Event_user.user_id];
     let connection;
     try {
@@ -62,9 +61,9 @@ export default class EventMySQLRepository implements EventInterface {
   }
 }
   async registerEvent(event: Event): Promise<any> {
-    const sqlEvent = "INSERT INTO Events (name, description, location, hour , cathegory, date, association_id, photo) VALUES (?,?,?, ?,?,?,?,?)";
+    const sqlEvent = "INSERT INTO Events (name, description, latitude,longitude, hour_start,hour_end , cathegory, date, association_id, picture) VALUES (?,?,?, ?,?,?,?,?,?,?)";
 
-    const paramsEvent: any[] = [event.name, event.description, event.location, event.hour, event.cathegory, event.date, event.association_id, event.picture];
+    const paramsEvent: any[] = [event.name, event.description, event.latitude,event.longitude, event.hour_start,event.hour_end, event.cathegory, event.date, event.association_id, event.picture];
     
     let connection;
 
@@ -80,8 +79,12 @@ export default class EventMySQLRepository implements EventInterface {
             id: resultEvent.insertId,
             name: event.name,
             description: event.description,
-            location: event.location,
-            hour: event.hour,
+            location: {
+              latitude: event.latitude,
+              longitude: event.longitude,
+            },
+            hour_start: event.hour_start,
+            hour_end: event.hour_end,
             cathegory: event.cathegory,
             date: event.date,
             association_id: event.association_id,

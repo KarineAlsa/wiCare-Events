@@ -27,6 +27,7 @@ export async function VerifyToken(req: Request, res: Response, next: NextFunctio
            
             const userId = decodedToken.id; 
             req.params.id = userId;
+            (req as any).user = decodedToken;
             
             next();
         } catch (error) {

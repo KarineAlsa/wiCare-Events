@@ -6,11 +6,13 @@ export default class RegisterEventUseCase {
 
     constructor(readonly repository:EventInterface, private storageService: IStorageService) {}
 
-    async run( {name, description, location, hour, cathegory, date, associationId, file}: {
+    async run( {name, description, latitude,longitude, hour_start,hour_end, cathegory, date, associationId, file}: {
         name:string,
         description:string,
-        location:string,
-        hour:string,
+        latitude:number,
+        longitude:number,
+        hour_start:string,
+        hour_end:string,
         cathegory:string,
         date:string,
         associationId:number,
@@ -22,10 +24,12 @@ export default class RegisterEventUseCase {
             let event = new Event(
                 name,
                 description,
-                hour,
+                hour_start,
+                hour_end,
                 date,
                 cathegory,
-                location,
+                latitude,
+                longitude,
                 associationId,
                 url
             );
