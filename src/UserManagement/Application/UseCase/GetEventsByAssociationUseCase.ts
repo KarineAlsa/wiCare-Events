@@ -2,7 +2,7 @@ import { Event } from "../../Domain/Entity/Event";
 import  EventInterface  from "../../Domain/Port/EventInterface";
 
 
-export default class GetAllEventsUseCase {
+export default class GetEventsByAssociationUseCase {
 
     constructor(readonly repository:EventInterface) {}
 
