@@ -10,4 +10,6 @@ eventRouter.get("/",VerifyToken,getAllEventsController.run.bind(getAllEventsCont
 eventRouter.get("/association/:association_id",VerifyToken,getEventsAssociationController.run.bind(getEventsAssociationController));
 eventRouter.get("/cathegory/:cathegory",VerifyToken,getEventsByCathegoryController.run.bind(getEventsByCathegoryController));
 eventRouter.post("/:event_id/volunteer",VerifyToken,addVolunteerToEventController.run.bind(addVolunteerToEventController));
+eventRouter.get("/:event_id",VerifyToken,getEventByIdController.run.bind(getEventByIdController));
 export default eventRouter;
+
