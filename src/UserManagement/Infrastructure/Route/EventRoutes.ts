@@ -9,7 +9,7 @@ eventRouter.post("/",VerifyToken,authorize(['association']),upload.single("pictu
 eventRouter.get("/",VerifyToken,getAllEventsController.run.bind(getAllEventsController));
 eventRouter.get("/association/:association_id",VerifyToken,getEventsAssociationController.run.bind(getEventsAssociationController));
 eventRouter.get("/cathegory/:cathegory",VerifyToken,getEventsByCathegoryController.run.bind(getEventsByCathegoryController));
-eventRouter.post("/:event_id/volunteer",VerifyToken,addVolunteerToEventController.run.bind(addVolunteerToEventController));
+eventRouter.post("/:event_id/volunteers",VerifyToken,addVolunteerToEventController.run.bind(addVolunteerToEventController));
 eventRouter.get("/:event_id",VerifyToken,getEventByIdController.run.bind(getEventByIdController));
 eventRouter.get("/:event_id/volunteers",VerifyToken,getEventVolunteersController.run.bind(getEventVolunteersController));
 export default eventRouter;
