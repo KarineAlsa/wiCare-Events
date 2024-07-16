@@ -13,7 +13,9 @@ export default class GetAllEventsController {
 
 
             let event = await sendMessageAndWaitForResponse("getAllEvents",events)
+            
             if (event) {
+                
                 return response.status(200).json({data:event,message:"All events",success:true});
             } else {
                 response.status(404).send({

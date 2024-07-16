@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import  GetEventById  from "../../Application/UseCase/GetEventById";
+import sendMessageAndWaitForResponse from "../Service/SagaMessagin";
 
 export default class GetEventByIdController {
 
@@ -11,7 +12,10 @@ export default class GetEventByIdController {
         try {
             
             let event = await this.useCase.run(Number(id));
-            if (event) {
+
+            let eventSaga = await sendMessageAndWaitForResponse('getEventById',{ associationId: id });
+
+            if (eventSaga) {
                 return response.status(200).json({data:event,message:"Event obtained",success:true});
             } else {
                 response.status(404).send({
