@@ -6,6 +6,27 @@ import { Event } from "../../Domain/Entity/Event";
 import { Event_User } from "../../Domain/Entity/Event_User";
 
 export default class EventMySQLRepository implements EventInterface {
+  async getEventUsersByIdEvent(id: number): Promise<any> {
+    const sql = "SELECT user_id FROM Events_Users WHERE event_id = ?";
+    const params: any[] = [id];
+    let connection;
+    try {
+      connection = await connection_pool.getConnection();
+      const [result]: any = await query(sql, params, connection);
+      if (result.length === 0) {
+        return false;
+      }
+      return result;
+    } catch (error) {
+      console.error("Error al obtener usuarios por id de evento:", error);
+      return false;
+    } finally {
+      if (connection) {
+        connection.release();
+        console.log("Conexión cerrada");
+      }
+    }
+  }
   async registerEventUser(Event_user: Event_User): Promise<any> {
     const sql = "INSERT INTO Events_Users (event_id, user_id) VALUES (?,?)";
     const params: any[] = [Event_user.event_id, Event_user.user_id];

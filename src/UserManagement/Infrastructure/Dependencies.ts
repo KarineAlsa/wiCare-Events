@@ -4,6 +4,7 @@ import GetEventsAssociation from "../Application/UseCase/GetEventsByAssociationU
 import GetEventsByCathegoryUseCase from "../Application/UseCase/GetEventsByCathegory";
 import GetEventByIdUseCase from "../Application/UseCase/GetEventById"
 import AddVolunteerToEventUseCase from "../Application/UseCase/AddVolunteerEvent"
+import GetEventVolunteerUseCase from "../Application/UseCase/GetEventsVolunteerUseCase";
 
 import EventMySQLRepository from "./Repository/EventRepositoryMySQL"
 
@@ -19,6 +20,7 @@ import GetEventsByAssociationController from "./Controller/GetEventsByAssociatio
 import GetEventsByCathegoryController from "./Controller/GetEventsByCathegoryController";
 import GetEventByIdController from "./Controller/GetEventByIdController"
 import AddVolunteerToEventController from "./Controller/AddEventVolunteerController"
+import GetEventVolunteerByIdController from "./Controller/GetEventVolunteersController"
 
 export const MySqEventRepository = new EventMySQLRepository();
 export const currentRepository = MySqEventRepository;
@@ -29,6 +31,7 @@ export const getEventsAssociationCase = new GetEventsAssociation(currentReposito
 export const getEventsByCathegoryCase = new GetEventsByCathegoryUseCase(currentRepository);
 export const getEventByIdCase =  new GetEventByIdUseCase(currentRepository)
 export const addVolunteerToEventCase = new AddVolunteerToEventUseCase(currentRepository);
+export const getEventVolunteerCase = new GetEventVolunteerUseCase(currentRepository);
 
 export const registerEventController = new RegisterEventController(registerEventCase);
 export const getAllEventsController = new GetAllEventsController(getAllEventsCase);
@@ -36,3 +39,4 @@ export const getEventsAssociationController = new GetEventsByAssociationControll
 export const getEventsByCathegoryController = new GetEventsByCathegoryController(getEventsByCathegoryCase);
 export const getEventByIdController =  new GetEventByIdController(getEventByIdCase)
 export const addVolunteerToEventController = new AddVolunteerToEventController(addVolunteerToEventCase);
+export const getEventVolunteersController = new GetEventVolunteerByIdController(getEventVolunteerCase, getEventByIdCase);

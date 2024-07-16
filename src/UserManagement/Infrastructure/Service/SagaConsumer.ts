@@ -69,12 +69,3 @@ const handleGetEventsAssociation = async (message: any) => {
     
 };
 
-const handleGetVolunteers = async (message: any) => {
-    
-    const volunteers = [
-        { id: 1, name: "Volunteer 1" },
-        { id: 2, name: "Volunteer 2" }
-    ];
-    return { volunteers };
-};
-

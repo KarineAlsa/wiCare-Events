@@ -8,4 +8,5 @@ export default interface EventInterface{
     getAllEventsByAssociationId(association_id:number):Promise<Event[]|any>;//ya
     getEventsByCathegory(cathegory:string):Promise<Event[]|any>;
     registerEventUser(Event_user:Event_User):Promise<any>;
+    getEventUsersByIdEvent(id:number):Promise<any>;
 }

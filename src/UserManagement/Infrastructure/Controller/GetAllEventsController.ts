@@ -11,7 +11,7 @@ export default class GetAllEventsController {
             
             let events = await this.useCase.run();
 
-
+            console.log(events)
             let event = await sendMessageAndWaitForResponse("getAllEvents",events)
             
             if (event) {

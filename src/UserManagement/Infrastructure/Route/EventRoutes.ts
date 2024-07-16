@@ -1,5 +1,5 @@
 import  express  from "express";
-import {   registerEventController, getAllEventsController, getEventsAssociationController, getEventByIdController, getEventsByCathegoryController, addVolunteerToEventController  } from "../Dependencies";
+import {   registerEventController, getAllEventsController, getEventsAssociationController, getEventByIdController, getEventsByCathegoryController, addVolunteerToEventController , getEventVolunteersController } from "../Dependencies";
 import {VerifyToken} from "../Controller/Middleware/VerifyToken";
 import {upload} from "../../../config/multer";
 import { authorize } from "../Controller/Middleware/authorize";
@@ -11,5 +11,6 @@ eventRouter.get("/association/:association_id",VerifyToken,getEventsAssociationC
 eventRouter.get("/cathegory/:cathegory",VerifyToken,getEventsByCathegoryController.run.bind(getEventsByCathegoryController));
 eventRouter.post("/:event_id/volunteer",VerifyToken,addVolunteerToEventController.run.bind(addVolunteerToEventController));
 eventRouter.get("/:event_id",VerifyToken,getEventByIdController.run.bind(getEventByIdController));
+eventRouter.get("/:event_id/volunteers",VerifyToken,getEventVolunteersController.run.bind(getEventVolunteersController));
 export default eventRouter;
 
