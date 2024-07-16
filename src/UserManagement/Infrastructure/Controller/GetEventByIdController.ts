@@ -13,10 +13,10 @@ export default class GetEventByIdController {
             
             let event = await this.useCase.run(Number(id));
 
-            let eventSaga = await sendMessageAndWaitForResponse('getEventById',{ associationId: id });
+            let eventSaga = await sendMessageAndWaitForResponse('getEventById',event);
 
             if (eventSaga) {
-                return response.status(200).json({data:event,message:"Event obtained",success:true});
+                return response.status(200).json({data:eventSaga,message:"Event obtained",success:true});
             } else {
                 response.status(404).send({
                     
