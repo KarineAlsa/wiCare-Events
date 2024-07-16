@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import  GetAllEventsUseCase  from "../../Application/UseCase/GetAllEventsUseCase";
+import sendMessageAndWaitForResponse from "../Service/SagaMessagin";
 
 export default class GetAllEventsController {
 
@@ -8,7 +9,10 @@ export default class GetAllEventsController {
     async run(request:Request,response:Response) {
         try {
             
-            let event = await this.useCase.run();
+            let events = await this.useCase.run();
+            
+
+            let event = await sendMessageAndWaitForResponse("getAllEvents",events)
             if (event) {
                 return response.status(200).json({data:event,message:"All events",success:true});
             } else {

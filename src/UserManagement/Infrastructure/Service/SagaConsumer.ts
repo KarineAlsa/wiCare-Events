@@ -61,7 +61,7 @@ const handleGetEventsAssociation = async (message: any) => {
     
     try {
         const events = await getEventsAssociationCase.run(message.associationId);
-
+        console.log(`Events:`, events);
         return events ;
     } catch (error:any) {
         console.error(`Error getting events:`, error.message);
