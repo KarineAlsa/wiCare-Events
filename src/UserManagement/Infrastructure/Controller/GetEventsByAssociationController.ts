@@ -14,7 +14,7 @@ export default class GetEventsAssociationController {
             if (event) {
                 return response.status(200).json({data:event,message:"All events by association id",success:true});
             } else {
-                response.status(400).send({
+                response.status(404).send({
                     
                     message: "No se pudo obtener los eventos por asociación",
                     success: false,

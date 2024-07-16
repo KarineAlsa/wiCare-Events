@@ -14,7 +14,7 @@ export default class GetEventByIdController {
             if (event) {
                 return response.status(200).json({data:event,message:"Event obtained",success:true});
             } else {
-                response.status(400).send({
+                response.status(404).send({
                     
                     message: "No se pudo obtener el evento",
                     success: false,

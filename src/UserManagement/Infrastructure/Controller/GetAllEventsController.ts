@@ -10,13 +10,13 @@ export default class GetAllEventsController {
         try {
             
             let events = await this.useCase.run();
-            
+
 
             let event = await sendMessageAndWaitForResponse("getAllEvents",events)
             if (event) {
                 return response.status(200).json({data:event,message:"All events",success:true});
             } else {
-                response.status(400).send({
+                response.status(404).send({
                     
                     message: "No se pudo obtener los eventos",
                     success: false,

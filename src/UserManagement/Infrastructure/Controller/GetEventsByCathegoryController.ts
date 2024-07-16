@@ -14,7 +14,7 @@ export default class GetEventsByCathegoryController {
             if (event) {
                 return response.status(200).json({data:event,message:"All events by cathegory",success:true});
             } else {
-                response.status(400).send({
+                response.status(404).send({
                     
                     message: "No se pudo obtener los eventos por categoria",
                     success: false,
