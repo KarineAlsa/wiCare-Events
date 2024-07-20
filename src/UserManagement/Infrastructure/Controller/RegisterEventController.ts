@@ -1,20 +1,21 @@
 import { Request, Response } from "express";
 import  CreateEvent  from "../../Application/UseCase/CreateEventUseCase";
 import { randomUUID } from 'crypto';
+import sendMessageAndWaitForResponse from "../Service/SagaMessagin";
 import validator from 'validator';
 export default class RegisterEventController {
 
     constructor(readonly useCase:CreateEvent){}
 
     async run(request:Request,response:Response) {
-        const { name, description, latitude, longitude, date, hour_start,hour_end, cathegory} = request.body;
+        const { name, description,date, hour_start,hour_end, cathegory} = request.body;
         const association_id = request.params.id;
 
         if (!request.file) {
             return response.status(400).json({ error: 'No file uploaded' });
         }
         
-        if (!name || !description || !latitude || !longitude|| !date || !hour_start|| !hour_end || !association_id || !cathegory) {
+        if (!name || !description || !date || !hour_start|| !hour_end || !association_id || !cathegory) {
             return response.status(400).json({
                 message: "Debe completar todos los campos.",
                 success: false
@@ -25,8 +26,7 @@ export default class RegisterEventController {
         if (
             name.trim() === "" ||
             description.trim() === "" ||
-            latitude.trim() === "" ||
-            longitude.trim() === "" ||
+            
             date.trim() === "" ||
             hour_start.trim() === "" ||
             hour_end.trim() === "" ||
@@ -47,27 +47,31 @@ export default class RegisterEventController {
         }
 
         try {
-            
-            let event = await this.useCase.run({
-                name,
-                description,
-                latitude: Number(latitude),
-                longitude: Number(longitude),
-                hour_start,
-                hour_end,
-                cathegory,
-                date,
-                associationId:Number(association_id),
-                file:{file,fileName,mimeType},
-            });
-            if (event) {
-                return response.status(200).json({data:event,message:"Event created",success:true});
-            } else {
-                response.status(404).send({
-                    
-                    message: "No se pudo crear el evento",
-                    success: false,
+
+            let location = await sendMessageAndWaitForResponse('get_location', {associationId:association_id});
+            if (location) {
+                
+                let event = await this.useCase.run({
+                    name,
+                    description,
+                    latitude: Number(location.latitude),
+                    longitude: Number(location.longitude),
+                    hour_start,
+                    hour_end,
+                    cathegory,
+                    date,
+                    associationId:Number(association_id),
+                    file:{file,fileName,mimeType},
                 });
+                if (event) {
+                    return response.status(200).json({data:event,message:"Event created",success:true});
+                } else {
+                    response.status(404).send({
+                        
+                        message: "No se pudo crear el evento",
+                        success: false,
+                    });
+                }
             }
         } catch (error:any) {
             console.log(error)
