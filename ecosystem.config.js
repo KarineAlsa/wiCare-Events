@@ -10,11 +10,11 @@ module.exports = {
         },
         env: {
           NODE_ENV: 'development',
-          PORT: 1234
+          PORT: 443
         },
         env_production: {
           NODE_ENV: 'production',
-          PORT: 1234
+          PORT: 443
         }
       }
     ]

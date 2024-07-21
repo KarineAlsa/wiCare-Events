@@ -11,7 +11,7 @@ import { consumeMessages } from './UserManagement/Infrastructure/Service/SagaCon
 
 dotenv.config()
 const server = express();
-const server_port =443;
+const server_port =process.env.PORT;
 server.use(express.json());
 server.use('/', eventRoutes);
 
