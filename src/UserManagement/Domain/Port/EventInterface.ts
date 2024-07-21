@@ -9,4 +9,5 @@ export default interface EventInterface{
     getEventsByCathegory(cathegory:string):Promise<Event[]|any>;
     registerEventUser(Event_user:Event_User):Promise<any>;
     getEventUsersByIdEvent(id:number):Promise<any>;
+    getEventsUserComing(id_volunteer:number):Promise<Event[]|any>;
 }
