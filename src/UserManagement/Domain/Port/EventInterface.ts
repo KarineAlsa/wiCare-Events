@@ -11,4 +11,5 @@ export default interface EventInterface{
     getEventUsersByIdEvent(id:number):Promise<any>;
     getEventsUserComing(id_volunteer:number):Promise<Event[]|any>;
     getEventsUserFinished(id_volunteer:number):Promise<Event[]|any>;
+    markFinishedEvents(date:string):Promise<any>;
 }

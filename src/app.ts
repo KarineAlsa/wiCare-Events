@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from 'dotenv'
 import path from 'path';
+import './UserManagement/Infrastructure/Service/SchedulerService'; // Importa para que el cron job se inicie
 
 import eventRoutes from "./UserManagement/Infrastructure/Route/EventRoutes";
 

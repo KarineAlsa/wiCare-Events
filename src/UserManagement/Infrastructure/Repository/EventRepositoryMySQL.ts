@@ -6,6 +6,34 @@ import { Event } from "../../Domain/Entity/Event";
 import { Event_User } from "../../Domain/Entity/Event_User";
 
 export default class EventMySQLRepository implements EventInterface {
+  async markFinishedEvents(date: string): Promise<any> {
+    const sql = "UPDATE Events SET finished = true WHERE finished = false AND CONCAT(date, ' ', hour_end) <= ?";
+    console.log(date);
+    const params: any[] = [date];
+    let connection;
+    try {
+      connection = await connection_pool.getConnection();
+      await connection.beginTransaction();
+      const [result]: any = await query(sql, params, connection);
+      if (result.affectedRows > 0) {
+        await connection.commit();
+        return true;
+      }
+      await connection.rollback();
+      return false;
+    } catch (error) {
+      console.error("Error al marcar eventos como finalizados:", error);
+      if (connection) {
+        await connection.rollback();
+      }
+      return false;
+    } finally {
+      if (connection) {
+        connection.release();
+        console.log("Conexión cerrada");
+      }
+    }
+  }
   async getEventsUserFinished(id_volunteer: number): Promise<Event[] | any> {
     const sql = "SELECT * FROM Events e JOIN Events_Users eu ON e.id = eu.event_id WHERE eu.user_id = ? AND e.finished = true";
     const params: any[] = [id_volunteer];
