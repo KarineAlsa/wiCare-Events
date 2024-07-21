@@ -6,8 +6,29 @@ import { Event } from "../../Domain/Entity/Event";
 import { Event_User } from "../../Domain/Entity/Event_User";
 
 export default class EventMySQLRepository implements EventInterface {
+  async getEventsUserFinished(id_volunteer: number): Promise<Event[] | any> {
+    const sql = "SELECT * FROM Events e JOIN Events_Users eu ON e.id = eu.event_id WHERE eu.user_id = ? AND e.finished = true";
+    const params: any[] = [id_volunteer];
+    let connection;
+    try {
+      connection = await connection_pool.getConnection();
+      const [result]: any = await query(sql, params, connection);
+      if (result.length === 0) {
+        return false;
+      }
+      return result;
+    } catch (error) {
+      console.error("Error al obtener eventos a los que asistió el usuario:", error);
+      return false;
+    } finally {
+      if (connection) {
+        connection.release();
+        console.log("Conexión cerrada");
+      }
+    }
+  }
   async getEventsUserComing(id_volunteer:number): Promise<Event[] | any> {
-    //Joion de event_user con event para obtener los eventos a los que asistirá el usuario que no han finalizado
+    
     const sql = "SELECT * FROM Events e JOIN Events_Users eu ON e.id = eu.event_id WHERE eu.user_id = ? AND e.finished = false";
     const params: any[] = [id_volunteer];
     let connection;

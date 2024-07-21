@@ -1,6 +1,6 @@
 import * as amqp from 'amqplib';
 import dotenv from 'dotenv';
-import {getEventsAssociationCase, getEventsComingCase} from '../Dependencies'
+import {getEventsAssociationCase, getEventsComingCase, getEventsFinishedCase} from '../Dependencies'
 dotenv.config();
 
 
@@ -22,6 +22,7 @@ export const consumeMessages = async () => {
         const queues = [
             { name: 'get_events_queue', bindingKey: 'getEventsOfAssociation', handler: handleGetEventsAssociation },
             { name: 'get_events_coming_volunteer', bindingKey: 'getEventsComingVolunteer', handler: handleGetEventsComing },
+            { name: 'get_events_finished_volunteer', bindingKey: 'getEventsFinishedVolunteer', handler: handleGetEventsFinished }
             
         ];
         for (const queue of queues) {
@@ -81,3 +82,15 @@ const handleGetEventsComing = async (message: any) => {
         }
         
     }
+
+const handleGetEventsFinished = async (message: any) => {
+            
+            try {
+                const events = await getEventsFinishedCase.run(message.volunteerId);
+                console.log(`Events:`, events);
+                return events ;
+            } catch (error:any) {
+                console.error(`Error getting events:`, error.message);
+            }
+            
+        }

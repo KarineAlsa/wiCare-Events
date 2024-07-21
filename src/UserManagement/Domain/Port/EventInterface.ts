@@ -10,4 +10,5 @@ export default interface EventInterface{
     registerEventUser(Event_user:Event_User):Promise<any>;
     getEventUsersByIdEvent(id:number):Promise<any>;
     getEventsUserComing(id_volunteer:number):Promise<Event[]|any>;
+    getEventsUserFinished(id_volunteer:number):Promise<Event[]|any>;
 }
