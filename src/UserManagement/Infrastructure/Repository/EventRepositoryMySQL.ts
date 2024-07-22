@@ -247,7 +247,7 @@ export default class EventMySQLRepository implements EventInterface {
     }
   }
   async getAllEventsByAssociationId(association_id: number): Promise<Event[]|any> {
-    const sql = "SELECT * FROM Events WHERE association_id = ?";
+    const sql = "SELECT * FROM Events WHERE association_id = ? AND finished = false";
     const params: any[] = [association_id];
     let connection;
     try {
@@ -259,6 +259,28 @@ export default class EventMySQLRepository implements EventInterface {
       return result;
     } catch (error) {
       console.error("Error al obtener eventos por id de asociación:", error);
+      return false;
+    } finally {
+      if (connection) {
+        connection.release();
+        console.log("Conexión cerrada");
+      }
+    }
+  }
+
+  async getEventsFinshedByAssociationId(association_id: number): Promise<any> {
+    const sql = "SELECT * FROM Events WHERE association_id = ? AND finished = true";
+    const params: any[] = [association_id];
+    let connection;
+    try {
+      connection = await connection_pool.getConnection();
+      const [result]: any = await query(sql, params, connection);
+      if (result.length === 0) {
+        return false;
+      }
+      return result;
+    } catch (error) {
+      console.error("Error al obtener eventos por id de asociación finalizados:", error);
       return false;
     } finally {
       if (connection) {

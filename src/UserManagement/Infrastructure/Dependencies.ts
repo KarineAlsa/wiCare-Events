@@ -8,6 +8,7 @@ import GetEventVolunteerUseCase from "../Application/UseCase/GetEventsVolunteerU
 import GetEventsComingUseCase from "../Application/UseCase/GetEventsComingUseCase";
 import GetEventsFinishedUseCase from "../Application/UseCase/GetEventsFinishedUseCase";
 import EventUpdateUseCase from "../Application/UseCase/EventUpdate";
+import GetEventsFinshedByAssociationUseCase from "../Application/UseCase/GetEventsFinshedByAssociationUseaCase";
 
 import EventMySQLRepository from "./Repository/EventRepositoryMySQL"
 
@@ -38,6 +39,7 @@ export const getEventVolunteerCase = new GetEventVolunteerUseCase(currentReposit
 export const getEventsComingCase = new GetEventsComingUseCase(currentRepository);
 export const getEventsFinishedCase = new GetEventsFinishedUseCase(currentRepository);
 export const eventUpdateCase = new EventUpdateUseCase(currentRepository);
+export const getEventsFinshedByAssociationCase = new GetEventsFinshedByAssociationUseCase(currentRepository);
 
 export const registerEventController = new RegisterEventController(registerEventCase);
 export const getAllEventsController = new GetAllEventsController(getAllEventsCase);
